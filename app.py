@@ -53,12 +53,16 @@ def not_during_night(func):
 def say_whee():
     print("whee")
 
-
 say_whee = not_during_night(say_whee)
 
 @not_during_night
 def say_whee():
     print("whee")
 
+# yes
 # @not_during_night is just an easier way of saying say_whee = not_during_night(say_whee).
 # It’s how you apply a decorator to a function.
+
+
+print("hello world")
+
