@@ -53,6 +53,7 @@ def not_during_night(func):
 def say_whee():
     print("whee")
 
+
 say_whee = not_during_night(say_whee)
 
 @not_during_night
