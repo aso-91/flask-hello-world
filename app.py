@@ -6,66 +6,51 @@ from flask import Flask
 # create the application object
 app = Flask(__name__)
 
+# error handling
+app.config["DEBUG"] = True
+
 # use the decorator pattern to link the view function to a url
 @app.route("/")
 @app.route("/hello")
 
 # define the view using a function, which returns a string
 def hello_world():
-    return "Hello World!"
+    return "Hello World!?????"
 
-# start the development server using the run() method
+
+# adding dynamic route                  (a1)
+# @app.route("/test")
+# def search():
+#     return "Hello"
+@app.route("/test/<search_query>")
+def search(search_query):
+    return search_query
+
+# ** (2)
+# @app.route("/integer/<int:value>")
+# def int_type(value):
+#     print(value + 1)
+#     return "correct"
+#
+# @app.route("/float/<float:value>")
+# def float_type(value):
+#     print(value + 1)
+#     return "correct"
+
+# dynamic route that accepts slashes
+# @app.route("/path/<path:value>")
+# def path_type(value):
+#     print(value)
+#     return "correct"
+
+# dynamic route with explicit status codes              (3)
+@app.route("/name/<name>")
+def index(name):
+    if name.lower() == "michael":
+        return "Hello, {}".format(name)
+    else:
+        return "Not found", 404
+
+
 if __name__ == "__main__":
     app.run()
-
-# This launches the development server that's listening on port 5000.
-# Open a web browser and navigate to http://127.0.0.1:5000/.
-
-#  http://127.0.0.1:5000 and http://localhost:5000 are equivalent.
-
-
-#_______________________ What's going on here? ____________________
-# Let's first look at the code without the view function:
-
-# 1. We imported the Flask class
-from flask import Flask
-
-# 2. Next, an instance of the Flask class was created
-app = Flask(__name__)
-
-# 3. Finally, we used the run() method , to run it locally
-if __name__ == "__main__":
-    app.run()
-
-
-#******* Check page 42 for links to Decorators..!!
-
-from datetime import datetime
-
-def not_during_night(func):
-    def wrapper():
-        if 7 >= datetime.now().hour > 22:
-            func()
-        else:
-            pass # Hush, the neighbors are asleep
-    return wrapper
-
-def say_whee():
-    print("whee")
-
-say_whee = not_during_night(say_whee)
-
-@not_during_night
-def say_whee():
-    print("whee")
-
-# yes
-# @not_during_night is just an easier way of saying say_whee = not_during_night(say_whee).
-# It’s how you apply a decorator to a function.
-
-
-print("hello world")
-
-# now  we added one comment to do git commit
-x = 1 + 2
-
